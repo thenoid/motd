@@ -1,0 +1,33 @@
+---
+driver:
+  name: vagrant
+  ssh:
+    insert_key: false
+
+provisioner:
+  name: chef_zero
+
+platforms:
+  - name: centos-5.11
+  - name: centos-6.6
+  - name: centos-7.1
+  - name: ubuntu-12.04
+
+suites:
+  - name: noattribs
+    run_list:
+      - recipe[motd::default]
+    attributes:
+  - name: default
+    run_list:
+      - recipe[motd::default]
+    attributes:
+      motd:
+        append:
+          - "bob dobbs"
+          - "hookers and blow"
+      dsw: 
+        owner: "Bob Dobbs"
+        docs:
+          - "http://google.com"
+          - "http://slashdot.org"

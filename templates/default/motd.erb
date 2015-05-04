@@ -1,0 +1,37 @@
+<%= "*" * 80 %>
+<%= "*" << @header.center(78) << "*" %>
+<%= "*" * 80 %>
+Platform: <%= @motd_ohai[:manufacturer].ljust(30) -%>Model: <%= @motd_ohai[:product_name].ljust(32) %>
+Serial: <%= @motd_ohai[:serial_number].ljust(32) -%>Console: <%= @console.ljust(31) %>
+OS: <%= node["platform"].capitalize << " " << node["platform_family"].upcase << " " << node["platform_version"] %>
+Kernel: <%= node["os"].capitalize << " " << node["os_version"] << " " << node["kernel"]["machine"] %>
+<% unless @dsw["built"].nil? -%>
+Build Date: <%= @dsw["built"] %>
+<% end -%>
+
+<% if defined?(node["rhn"]["hostname"]) -%>
+Satellite: <%= node["rhn"]["hostname"] %>
+<% end -%>
+<% if defined?(node['chef_client']['config']['chef_server_url']) -%>
+Chef: <%= node['chef_client']['config']['chef_server_url'] %>
+<% end -%>
+<% if node['roles'].length > 0 -%>
+Roles: <%= node['roles'].sort.join(", ") %>
+<% end -%>
+<% unless @dsw['owner'].nil? -%>
+Owner: <%= @dsw['owner'] %>
+<% end -%>
+<% unless @dsw['docs'].nil? -%>
+Docs: <%= @dsw['docs'].join("\n#{' '*'Docs: '.length}") %>
+<% end -%>
+<% if !@motd['updates'].nil? && @motd['updates'].size > 0 -%>
+
+System Updates Required:
+<%= @motd['updates'].join("\n") %>
+<% end -%>
+<% if !@motd['append'].nil? && @motd['append'].size > 0 -%>
+
+<%= @motd['append'].join("\n") %>
+<% end -%>
+
+System information as of <%= Time.now.rfc2822 %>
