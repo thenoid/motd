@@ -5,6 +5,9 @@
 # Copyright (c) 2015 The Authors, All Rights Reserved.
 #
 include_recipe 'motd::console'
+include_recipe 'motd::updates'
+
+puts "meh"
 
 secpkg = ''
 motd_file = '/etc/motd'
