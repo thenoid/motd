@@ -7,7 +7,7 @@ end
 case manufacturer.to_s
 when /dell/i
   if File.exist?('/opt/dell/srvadmin/sbin/racadm')
-    default['console']['type'] = 'drac'
+    node.default['console']['type'] = 'drac'
     drac = {}
     cmd = %w(/opt/dell/srvadmin/sbin/racadm getconfig -g cfgLanNetworking
              | egrep -v ^#
@@ -21,7 +21,7 @@ when /dell/i
     end
     node.default['console']['config'] = drac
     cfgnicipaddress = node.default['console']['config']['cfgNicIpAddress']
-    node.default['console']['ip'] = cfgnicipaddress.inspect
+    node.default['console']['ip'] = cfgnicipaddress
   end
 else
   node.default['console'] = { 'type' => '', 'config' => {}, 'ip' => '' }
