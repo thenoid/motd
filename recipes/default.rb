@@ -7,8 +7,6 @@
 include_recipe 'motd::console'
 include_recipe 'motd::updates'
 
-puts "meh"
-
 secpkg = ''
 motd_file = '/etc/motd'
 
@@ -26,10 +24,11 @@ when 'rhel'
   rpmquery_matched = rpmquery.stdout.match(/Install\s*Date.*/i).to_s
   built = rpmquery_matched.gsub!(/.*Install\s*Date\W*((\S+\s?)+).*/i, '\1')
   node.default['dsw']['built'] = built
+
 when 'debian'
   motd_file = '/etc/motd.dsw'
-  template '/etc/update-motd.d/00-dsw_header' do
-    source '00-dsw_header.erb'
+  template '/etc/update-motd.d/00-chef_header' do
+    source '00-chef_header.erb'
     owner 'root'
     group 'root'
     mode 00755
