@@ -70,3 +70,13 @@ template motd_file do
     motd_ohai: motd_ohai
   )
 end
+
+template '/etc/issue' do
+  source 'issue.erb'
+  owner 'root'
+  group 'root'
+  mode 00644
+  variables(
+    issue: node['motd']['issue']
+  )
+end

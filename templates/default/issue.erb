@@ -1,0 +1,12 @@
+<%= "*" * 80 %>
+<% string = '' -%>
+<% @issue.split(/ /).each do |word| -%>
+<% if (string.length + 1 + word.length) > 77 -%>
+<%= '*' << string.ljust(77) << ' *' %>
+<% string = '' -%>
+<% else -%>
+<% string = [ string, word ].join(' ') -%>
+<% end -%>
+<% end -%>
+<%= '*' << string.ljust(77) << ' *' %>
+<%= "*" * 80 %>
